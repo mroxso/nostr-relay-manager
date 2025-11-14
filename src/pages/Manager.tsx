@@ -51,6 +51,7 @@ import {
 } from 'lucide-react';
 import { LoginArea } from '@/components/auth/LoginArea';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { PubkeyDisplay } from '@/components/PubkeyDisplay';
 import { nip19 } from 'nostr-tools';
 
 // Helper to normalize pubkey (accepts hex or npub, returns hex)
@@ -404,13 +405,6 @@ function PubkeyManagement({
     }
   };
 
-  const formatPubkey = (pubkey: string) => {
-    try {
-      return nip19.npubEncode(pubkey);
-    } catch {
-      return `${pubkey.slice(0, 8)}...${pubkey.slice(-8)}`;
-    }
-  };
 
   return (
     <>
@@ -486,8 +480,8 @@ function PubkeyManagement({
                 <TableBody>
                   {bannedPubkeys.map((item) => (
                     <TableRow key={item.pubkey}>
-                      <TableCell className="font-mono text-sm">
-                        {formatPubkey(item.pubkey)}
+                      <TableCell>
+                        <PubkeyDisplay pubkey={item.pubkey} variant="compact" />
                       </TableCell>
                       <TableCell>{item.reason || '-'}</TableCell>
                     </TableRow>
@@ -573,8 +567,8 @@ function PubkeyManagement({
                 <TableBody>
                   {allowedPubkeys.map((item) => (
                     <TableRow key={item.pubkey}>
-                      <TableCell className="font-mono text-sm">
-                        {formatPubkey(item.pubkey)}
+                      <TableCell>
+                        <PubkeyDisplay pubkey={item.pubkey} variant="compact" />
                       </TableCell>
                       <TableCell>{item.reason || '-'}</TableCell>
                     </TableRow>
